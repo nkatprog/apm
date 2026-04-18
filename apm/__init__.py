@@ -15,7 +15,14 @@ __license__ = "MIT"
 import logging
 
 # Use DEBUG locally for easier tracing; change to WARNING in prod
-logging.getLogger("apm").setLevel(logging.DEBUG)
+_logger = logging.getLogger("apm")
+_logger.setLevel(logging.DEBUG)
+
+# Personal note: add a simple formatter so log output is more readable
+_handler = logging.StreamHandler()
+_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s"))
+if not _logger.handlers:
+    _logger.addHandler(_handler)
 
 from apm.core import App
 
