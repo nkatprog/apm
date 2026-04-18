@@ -20,8 +20,9 @@ _logger.setLevel(logging.DEBUG)
 
 # Personal note: add a simple formatter so log output is more readable
 # Updated format to include %(funcName)s for easier call-site tracing
+# Also added %(lineno)d so I can jump directly to the source line in my editor
 _handler = logging.StreamHandler()
-_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s.%(funcName)s: %(message)s"))
+_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s.%(funcName)s:%(lineno)d: %(message)s"))
 if not _logger.handlers:
     _logger.addHandler(_handler)
 
