@@ -71,9 +71,12 @@ def configure_logging(verbose: bool = False, quiet: bool = False) -> None:
     else:
         level = logging.INFO
 
+    # Use a more informative format when in debug/verbose mode
+    fmt = "%(asctime)s %(levelname)s [%(name)s]: %(message)s" if verbose else "%(levelname)s: %(message)s"
+
     logging.basicConfig(
         level=level,
-        format="%(levelname)s: %(message)s",
+        format=fmt,
         stream=sys.stderr,
     )
 
@@ -98,26 +101,4 @@ def main(argv: Optional[list] = None) -> int:
 
     logger.debug("Running command: %s", args.command)
 
-    # Dispatch to subcommand handlers (stubs — to be implemented per module)
-    command = args.command
-
-    if command == "install":
-        logger.info("Installing: %s", ", ".join(args.packages))
-    elif command in ("uninstall", "remove"):
-        logger.info("Uninstalling: %s", ", ".join(args.packages))
-    elif command == "list":
-        logger.info("Listing installed packages...")
-    elif command == "update":
-        targets = args.packages or ["all packages"]
-        logger.info("Updating: %s", ", ".join(targets))
-    elif command == "search":
-        logger.info("Searching for: %s", args.query)
-    else:
-        logger.error("Unknown command: %s", command)
-        return 1
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    # Dispatch to sub
