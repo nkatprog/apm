@@ -30,5 +30,10 @@ if not _logger.handlers:
 
 from apm.core import App
 
+# Suppress verbose debug output from third-party libraries that apm pulls in;
+# they tend to flood the console and make my own debug logs hard to find.
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getLogger("requests").setLevel(logging.WARNING)
+
 # Also export __author_email__ since I added it
 __all__ = ["App", "__version__", "__author__", "__author_email__", "__license__"]
