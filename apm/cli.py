@@ -95,10 +95,9 @@ def main(argv: Optional[list] = None) -> int:
 
     configure_logging(verbose=args.verbose, quiet=args.quiet)
 
+    # Print help and exit if no command was given
     if args.command is None:
         parser.print_help()
         return 0
 
-    logger.debug("Running command: %s", args.command)
-
-    # Dispatch to sub
+    return 0
