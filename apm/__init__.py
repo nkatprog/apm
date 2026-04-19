@@ -38,6 +38,8 @@ logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 # Suppress noisy asyncio debug logs too
 logging.getLogger("asyncio").setLevel(logging.WARNING)
+# Suppress paramiko which can be very chatty during SSH-based workflow steps
+logging.getLogger("paramiko").setLevel(logging.WARNING)
 
 # Also export __author_email__ since I added it
 __all__ = ["App", "__version__", "__author__", "__author_email__", "__license__"]
