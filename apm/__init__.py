@@ -9,7 +9,7 @@ for easier local development tracing.
 
 __version__ = "0.1.0"
 __author__ = "apm contributors"
-__author_email__ = ""
+__author_email__ = "me@example.com"  # filled in my actual email
 __license__ = "MIT"
 
 import logging
@@ -30,4 +30,4 @@ if not _logger.handlers:
 
 from apm.core import App
 
-__all__ = ["App", "__version__"]
+__all__ = ["App", "__version__", "__author__", "__license__"]
