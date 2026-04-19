@@ -36,6 +36,8 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("requests").setLevel(logging.WARNING)
 # Also suppress httpx which newer versions of some deps use instead of requests
 logging.getLogger("httpx").setLevel(logging.WARNING)
+# Suppress noisy asyncio debug logs too
+logging.getLogger("asyncio").setLevel(logging.WARNING)
 
 # Also export __author_email__ since I added it
 __all__ = ["App", "__version__", "__author__", "__author_email__", "__license__"]
