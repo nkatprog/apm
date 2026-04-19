@@ -95,9 +95,9 @@ def main(argv: Optional[list] = None) -> int:
 
     configure_logging(verbose=args.verbose, quiet=args.quiet)
 
-    # Print help and exit if no command was given
+    # Print help and exit cleanly when no subcommand is given
     if args.command is None:
-        parser.print_help()
-        return 0
+        parser.print_help(sys.stderr)
+        return 1
 
-    return 0
+    #
