@@ -30,4 +30,5 @@ if not _logger.handlers:
 
 from apm.core import App
 
-__all__ = ["App", "__version__", "__author__", "__license__"]
+# Also export __author_email__ since I added it
+__all__ = ["App", "__version__", "__author__", "__author_email__", "__license__"]
