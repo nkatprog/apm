@@ -22,8 +22,9 @@ _logger.setLevel(logging.DEBUG)
 # Updated format to include %(funcName)s for easier call-site tracing
 # Also added %(lineno)d so I can jump directly to the source line in my editor
 _handler = logging.StreamHandler()
-_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(name)s.%(funcName)s:%(lineno)d: %(message)s",
-                                        datefmt="%Y-%m-%dT%H:%M:%S"))  # ISO-style datetime is easier to sort/grep
+_handler.setFormatter(logging.Formatter(
+    "%(asctime)s [%(levelname)s] %(name)s.%(funcName)s:%(lineno)d: %(message)s",
+    datefmt="%Y-%m-%dT%H:%M:%S%z"))  # Added %z so timezone offset is included in timestamps
 if not _logger.handlers:
     _logger.addHandler(_handler)
 
