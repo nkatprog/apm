@@ -40,6 +40,9 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("asyncio").setLevel(logging.WARNING)
 # Suppress paramiko which can be very chatty during SSH-based workflow steps
 logging.getLogger("paramiko").setLevel(logging.WARNING)
+# Suppress boto3/botocore if any workflow steps touch AWS — these are extremely noisy
+logging.getLogger("boto3").setLevel(logging.WARNING)
+logging.getLogger("botocore").setLevel(logging.WARNING)
 
 # Also export __author_email__ since I added it
 __all__ = ["App", "__version__", "__author__", "__author_email__", "__license__"]
