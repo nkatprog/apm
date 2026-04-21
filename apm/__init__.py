@@ -43,6 +43,8 @@ logging.getLogger("paramiko").setLevel(logging.WARNING)
 # Suppress boto3/botocore if any workflow steps touch AWS — these are extremely noisy
 logging.getLogger("boto3").setLevel(logging.WARNING)
 logging.getLogger("botocore").setLevel(logging.WARNING)
+# Suppress google-cloud libraries, which are similarly chatty when auth is involved
+logging.getLogger("google").setLevel(logging.WARNING)
 
 # Also export __author_email__ since I added it
 __all__ = ["App", "__version__", "__author__", "__author_email__", "__license__"]
