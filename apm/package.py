@@ -73,7 +73,8 @@ class PackageManager:
     def _save_manifest(self, data: dict) -> None:
         """Persist the package manifest to disk."""
         with self.manifest_path.open("w", encoding="utf-8") as fh:
-            json.dump(data, fh, indent=2)
+            # Use indent=4 for more readable diffs in version control
+            json.dump(data, fh, indent=4)
             fh.write("\n")
         logger.debug("Manifest saved to %s", self.manifest_path)
 
@@ -86,67 +87,4 @@ class PackageManager:
 
         Args:
             package_name: Name of the package to install.
-            version: Version constraint (default: ``latest``).
-            dev: Whether to record as a dev dependency.
-
-        Returns:
-            ``True`` on success, ``False`` otherwise.
-        """
-        logger.info("Installing %s@%s (dev=%s)", package_name, version, dev)
-        self.packages_dir.mkdir(parents=True, exist_ok=True)
-
-        try:
-            result = subprocess.run(
-                ["pip", "install", f"{package_name}=={version}" if version != "latest" else package_name],
-                capture_output=True,
-                text=True,
-                check=True,
-            )
-            logger.debug(result.stdout)
-        except subprocess.CalledProcessError as exc:
-            logger.error("Failed to install %s: %s", package_name, exc.stderr)
-            return False
-
-        manifest = self._load_manifest()
-        dep_key = "devDependencies" if dev else "dependencies"
-        manifest.setdefault(dep_key, {})[package_name] = version
-        self._save_manifest(manifest)
-        logger.info("Package %s installed successfully.", package_name)
-        return True
-
-    def remove(self, package_name: str) -> bool:
-        """Remove a package and update the manifest.
-
-        Args:
-            package_name: Name of the package to remove.
-
-        Returns:
-            ``True`` on success, ``False`` otherwise.
-        """
-        logger.info("Removing %s", package_name)
-        try:
-            result = subprocess.run(
-                ["pip", "uninstall", "-y", package_name],
-                capture_output=True,
-                text=True,
-                check=True,
-            )
-            logger.debug(result.stdout)
-        except subprocess.CalledProcessError as exc:
-            logger.error("Failed to remove %s: %s", package_name, exc.stderr)
-            return False
-
-        manifest = self._load_manifest()
-        for dep_key in ("dependencies", "devDependencies"):
-            manifest.get(dep_key, {}).pop(package_name, None)
-        self._save_manifest(manifest)
-        logger.info("Package %s removed successfully.", package_name)
-        return True
-
-    def list_packages(self) -> List[str]:
-        """Return a sorted list of installed package names from the manifest."""
-        manifest = self._load_manifest()
-        packages: List[str] = []
-        for dep_key in ("dependencies", "devDependencies"):
-            packages.extend(manifest.get(dep_key, {}).keys())
-        return sorted(set(packages))
+            version: Version const
